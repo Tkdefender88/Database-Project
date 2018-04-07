@@ -1,0 +1,31 @@
+button {
+  border-radius: 3px;
+  border: 1px solid black;
+}
+
+.d-inline{
+  display: inline;
+}
+
+header {
+  width: 100%;
+
+  padding-bottom: 5px;
+
+  border-bottom: 2px solid #acacac;
+  
+  grid-row-start: header-start;
+}
+
+body {
+  display: grid;
+
+  min-height: 100vh;
+
+  grid-template-rows: [header-start] auto auto 1fr [footer-start] auto;
+}
+
+footer {
+  grid-row-start: footer-start;
+}
+

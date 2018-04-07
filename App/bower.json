@@ -1,0 +1,19 @@
+{
+  "name": "Clash of stats",
+  "main": "app.js",
+  "authors": [
+    "Justin Bak"
+  ],
+  "description": "",
+  "license": "none",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^1.1.1"
+  }
+}
