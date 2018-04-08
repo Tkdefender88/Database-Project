@@ -121,8 +121,8 @@ CREATE VIEW Overview AS
 	JOIN TroopList USING (userID);
 
 CREATE VIEW BuildingOverview AS
-	SELECT userID, COUNT(buildingID) AS 'qty', buildingName, levelNum, hp, upgradeCost,
-	upgradeTime, dps, damageType
+	SELECT userID, COUNT(buildingID) AS 'qty', buildingName, levelNum, hp, dps,
+	damageType, upgradeCost, upgradeTime 
 	FROM BuildingList JOIN Building USING (buildingID)
 	JOIN BuildingType USING (typeID)
 	GROUP BY userID, buildingName, levelNum, hp, upgradeCost, upgradeTime, dps,

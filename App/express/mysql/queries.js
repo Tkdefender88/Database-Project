@@ -9,7 +9,9 @@ module.exports = {
 
 	buildings: {
 		get All() {
-			return 'SELECT * FROM BuildingOverview WHERE userID = \?'
+			return 'SELECT qty, buildingName, levelNum, hp, upgradeCost,'
+			+ ' upgradeTime, dps, damageType FROM BuildingOverview'
+			+ ' WHERE userID = \?'
 		},
 
 		get nextLevel() {
