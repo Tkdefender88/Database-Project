@@ -72,7 +72,6 @@ INSERT INTO Troop (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
 upgradeCost)
 VALUES (2, 5, 17, '00:00:55', 20, '02:00:00', 60);
 
-
 #Buildings
 INSERT INTO BuildingType (buildingName)
 VALUES ('town Hall');
@@ -144,7 +143,7 @@ VALUES (6, 3, 35, 250, 1500, '00:50:00');
 INSERT INTO Building (typeID, levelNum, dps, hp, upgradeCost, upgradeTime)
 VALUES (7, 4, 8, 350, 2500, '00:45:00');
 
-INSERT INTO Building (typeID, levelNum, dps, hp, updradeCost, upgradeTime)
+INSERT INTO Building (typeID, levelNum, dps, hp, upgradeCost, upgradeTime)
 VALUES ( 8, 1, 150, 0, 1000, '00:30:00');
 
 INSERT INTO Building (typeID, levelNum, dps, hp, upgradeCost, upgradeTime)
@@ -163,7 +162,7 @@ INSERT INTO BuildingList (buildingID, userID)
 VALUES (2, 1);
 INSERT INTO BuildingList (buildingID, userID)
 VALUES (2, 1);
-INSERT INTO BuldingList (buildingID, userID)
+INSERT INTO BuildingList (buildingID, userID)
 VALUES (3, 1);
 INSERT INTO BuildingList (buildingID, userID)
 VALUES (1, 2);
@@ -195,9 +194,9 @@ INSERT INTO BuildingList (buildingID, userID)
 VALUES (7, 3);
 INSERT INTO BuildingList (buildingID, userID)
 VALUES (1, 4);
-INSERT INTO BuldingList (buildingID, userID)
+INSERT INTO BuildingList (buildingID, userID)
 VALUES (7, 4);
-INSERT INTO BuldingList (buildingID, userID)
+INSERT INTO BuildingList (buildingID, userID)
 VALUES (7, 4);
 INSERT INTO BuildingList (buildingID, userID)
 VALUES ( 4, 4);
@@ -236,7 +235,6 @@ VALUES(7, 6);
 INSERT INTO BuildingList (buildingID, userID)
 VALUES(7, 6);
 
-
 #UserClan
 
 INSERT INTO UserClan (clanID, userID)
@@ -272,10 +270,6 @@ INSERT INTO War (stars, warNotes, outcome, enemyClanName)
 VALUES (35, 'get them next time', 'Loss', 'freetibet');
 INSERT INTO War (stars, warNotes, outcome, enemyClanName)
 VALUES (15, 'Improve Strategies', 'Loss', 'Troopers');
-
-
-
-
 
 #UserWar
 INSERT INTO UserWar (userID, warID, stars, destruction)

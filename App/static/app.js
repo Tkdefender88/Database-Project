@@ -12,6 +12,7 @@ if (!('registerElement' in document) ||
 CLASH = (function () {
 	function clearPage() {
 		//Clear the page
+		let userID = window.CLASH.user.id;
 		let mainArea = document.querySelector('#mainArea');
 
 		while (mainArea && mainArea.firstChild) {
@@ -33,6 +34,7 @@ CLASH = (function () {
 			let buildings = document.querySelector('#buildingList');
 			let clonedBuildings = buildings.cloneNode(true);
 			let tableBody = clonedBuildings.querySelector('tbody');
+			console.log(tableBody);
 
 			for (let building of res) {
 				//make tr
@@ -61,7 +63,8 @@ CLASH = (function () {
 	}
 
 	function viewBuildings() {
-		reqBuildings('building/byUserID/' + userID, 'Building List');
+		let userID = window.CLASH.user.id;
+		reqBuildings('building/byUserID/' + userID , 'Building List');
 	}
 
 	let userID
@@ -87,7 +90,8 @@ CLASH = (function () {
 			contentType: 'application/json'
 		})
 		.done((res) => {
-			userID = res[0].userID;
+			window.CLASH.user.id = res[0].userID;
+			console.log(window.CLASH.user);
 		})
 		.fail(() => {
 			console.log('done borked');
@@ -98,6 +102,7 @@ CLASH = (function () {
 	//return the user I guess... 
 	return {
 		user: {
+			id: 0
 		}
 	}
 })();

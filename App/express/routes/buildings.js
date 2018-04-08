@@ -40,7 +40,7 @@ function handleQuery(req, res, query, args = []) {
 router.route('/building/byUserID/:id') 
 //Define get requests for the route
 .get((req, res) => {
-	handleQuery(req, res, queries.buildings.All, [req.params.id]);
+	handleQuery(req, res, queries.buildings.All, [req.body.id]);
 })
 .all(badRequest);
 
