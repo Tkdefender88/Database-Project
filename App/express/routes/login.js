@@ -50,7 +50,6 @@ function handleQuery(req, res, query, args = [ ]) {
             return;
 		}
 
-		console.log(results);
 		res.status(200).json(results);
 	});
 	
@@ -60,7 +59,6 @@ function handleQuery(req, res, query, args = [ ]) {
 router.route('/login')
 .post((req, res) => {
 	let body = req.body;
-	console.log(body);
     handleQuery(req, res, queries.login.login, [ body.userName, body.password ])
 })
 .all(badRequest);

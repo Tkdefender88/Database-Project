@@ -68,7 +68,7 @@ CLASH = (function () {
 	//bind the buttons
 	document.querySelector('#loginBtn').onclick = login;
 	document.querySelector('#viewOverview').onclick = viewOverview;
-	document.querySelector('#viewBuildings').onclick = reqBuildings;
+	document.querySelector('#viewBuildings').onclick = viewBuildings;
 
 	document.querySelector('#login').onsubmit = function(e) {
 		e.preventDefault();
@@ -87,8 +87,7 @@ CLASH = (function () {
 			contentType: 'application/json'
 		})
 		.done((res) => {
-			userID = res;
-			console.log(userID);
+			userID = res[0].userID;
 		})
 		.fail(() => {
 			console.log('done borked');
