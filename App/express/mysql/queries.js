@@ -38,8 +38,9 @@ module.exports = {
 
 	troops: {
 		get all() {
-			return 'SELECT qty, troopName, levelNum, hp, dps, damageType, '
-			+ 'upgradeCost, upgradeTime FROM TroopOverview WHERE userID = \?'
+			return 'SELECT troopName, levelNum, hp, dps, damageType, '
+			+ 'trainTime, regenTime, upgradeCost, upgradeTime '
+			+ 'FROM TroopOverview WHERE userID = \?'
 		},
 
 		get nextLevel() {

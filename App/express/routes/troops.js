@@ -29,6 +29,7 @@ function handleQuery(req, res, query, args = []) {
 			serverError(res)
 			return;
 		}
+		console.log(results);
 		res.status(200).json(results);
 	});
 
@@ -40,6 +41,7 @@ router.route('/troop/byUserID/:id')
 //Define get requests for the route
 .get((req, res) => {
 	let params = req.params;
+	console.log(params.id);
 	handleQuery(req, res, queries.troops.all, [params.id]);
 })
 .all(badRequest);

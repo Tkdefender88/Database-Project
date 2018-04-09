@@ -12,7 +12,6 @@ if (!('registerElement' in document) ||
 CLASH = (function () {
 	function clearPage() {
 		//Clear the page
-		let userID = window.CLASH.user.id;
 		let mainArea = document.querySelector('#mainArea');
 
 		while (mainArea && mainArea.firstChild) {
@@ -22,7 +21,7 @@ CLASH = (function () {
 	
 	//Login a temporary dummy user
 	function login() {
-		window.CLASH.user.id = 420;
+		window.CLASH.user.id = 1;
 	}
 
 	function reqBuildings(endpoint, title) {
@@ -64,6 +63,45 @@ CLASH = (function () {
 		})
 	}
 
+	function reqTroop(endpoint, title) {
+		clearPage();
+
+		$.ajax(endpoint)
+		.done((res) => {
+			let mainArea = document.querySelector('#mainArea');
+			let troops = document.querySelector('#troopList');
+			let clonedTroops = troops.cloneNode(true);
+			let tableBody = clonedTroops.querySelector('tbody');
+
+			for (let troop of res) {
+
+				let row = document.createElement('tr');
+
+				for (let col in troop) {
+					let entry = document.createElement('td');
+					entry.innerHTML = troop[col];
+
+					row.appendChild(entry);
+				}
+				
+				let upgradeBtn = document.createElement('button');
+				let text = document.createTextNode('Upgrade');
+				upgradeBtn.appendChild(text);
+
+				row.appendChild(upgradeBtn);
+
+				tableBody.appendChild(row);
+			}
+
+			clonedTroops.querySelector('h2').innerHTML = title;
+
+			mainArea.appendChild(clonedTroops);
+		})
+		.fail(() => {
+			console.log('foobar');
+		})
+	}
+
 	function viewBuildings() {
 		let userID = window.CLASH.user.id;
 		reqBuildings('building/byUserID/' + userID, 'Building List');
@@ -71,7 +109,8 @@ CLASH = (function () {
 
 	function viewTroops() {
 		let userID = window.CLASH.user.id;
-		reqBuildings('troop/byUserID/' + userID, 'Troop List');
+		console.log(userID);
+		reqTroop('troop/byUserID/' + userID, 'Troop List');
 	}
 	
 	function viewOverview() {
@@ -130,6 +169,12 @@ CLASH = (function () {
 
 		return false;
 	}
+/*
+	document.querySelector('#addBuilding').onsubmit = function(e) {
+		e.preventDefault();
+		let form = document.querySelector('#buildName');
+	}
+*/
 	//return the user I guess... 
 	return {
 		user: {
