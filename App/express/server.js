@@ -1,6 +1,8 @@
 const express = require('express');
 const login = require('./routes/login');
-const buildings = require('./routes/buildings')
+const buildings = require('./routes/buildings');
+const troops = require('./routes/troops');
+const overview = require('./routes/overview');
 
 const app = express();
 const port = process.env.EXPRESSPORT || 3000;
@@ -11,8 +13,10 @@ const static_path = path.join(__dirname, '../static');
 
 //App statics
 app.use(express.static(static_path, { dotfiles: 'ignore'}));
-app.use(login)
-app.use(buildings)
+app.use(login);
+app.use(buildings);
+app.use(troops);
+app.use(overview);
 
 //Bad Requests
 function badRequest(req, res) {
@@ -28,5 +32,9 @@ app.route('/webcomponents.js')
 .all(badRequest);
 
 app.listen(port, () => {
-	console.log(`Listening at csdept16.mtech.edu:"${port}"`);
+	if (port == 3000) {
+		console.log(`Listening at localhost:3000`);
+	} else {
+		console.log(`Listening at csdept16.mtech.edu:${port}`);
+	}
 });

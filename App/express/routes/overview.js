@@ -36,11 +36,11 @@ function handleQuery(req, res, query, args = []) {
 }
 
 //Define the building Overview route
-router.route('/building/byUserID/:id') 
+router.route('/overview/byUserID/:id') 
 //Define get requests for the route
 .get((req, res) => {
 	let params = req.params;
-	handleQuery(req, res, queries.buildings.all, [params.id]);
+	handleQuery(req, res, queries.overview.all, [params.id]);
 })
 .all(badRequest);
 

@@ -116,9 +116,11 @@ CREATE TABLE TroopList (
 );
 
 CREATE VIEW Overview AS
-	SELECT buildingID, troopID, userLevel
+	SELECT userID, COUNT(buildingID) AS numBuildings,
+	COUNT(troopID) AS numTroops, userLevel
 	FROM BuildingList JOIN User USING (userID)
-	JOIN TroopList USING (userID);
+	JOIN TroopList USING (userID)
+	GROUP BY userID, userLevel;
 
 CREATE VIEW BuildingOverview AS
 	SELECT userID, COUNT(buildingID) AS 'qty', buildingName, levelNum, hp, dps,

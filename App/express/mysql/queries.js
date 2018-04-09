@@ -7,11 +7,17 @@ module.exports = {
 		}
 	},
 
+	overview: {
+		get all() {
+			return 'SELECT numBuildings, numTroops, userLevel '
+				+ 'FROM Overview WHERE userID = \?';
+		}
+	},
+
 	buildings: {
-		get All() {
-			return 'SELECT qty, buildingName, levelNum, hp, upgradeCost,'
-			+ ' upgradeTime, dps, damageType FROM BuildingOverview'
-			+ ' WHERE userID = \?'
+		get all() {
+			return 'SELECT qty, buildingName, levelNum, hp, dps, damageType, '
+			+ 'upgradeCost, upgradeTime FROM BuildingOverview WHERE userID = \?'
 		},
 
 		get nextLevel() {
@@ -31,8 +37,9 @@ module.exports = {
 	},
 
 	troops: {
-		get All() {
-			return 'SELECT * FROM TroopOverview WHERE userID = \?'
+		get all() {
+			return 'SELECT qty, troopName, levelNum, hp, dps, damageType, '
+			+ 'upgradeCost, upgradeTime FROM TroopOverview WHERE userID = \?'
 		},
 
 		get nextLevel() {
