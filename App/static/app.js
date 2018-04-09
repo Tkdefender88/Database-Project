@@ -30,7 +30,6 @@ CLASH = (function () {
 
 		$.ajax(endpoint)
 		.done((res) => {
-			console.log(res);
 			let mainArea = document.querySelector('#mainArea');
 			let buildings = document.querySelector('#buildingList');
 			let clonedBuildings = buildings.cloneNode(true);
@@ -48,6 +47,9 @@ CLASH = (function () {
 				}
 
 				let button = document.createElement('button');
+				let text = document.createTextNode('Upgrade');
+				button.appendChild(text);
+				
 				row.appendChild(button);
 
 				tableBody.appendChild(row);
@@ -64,7 +66,35 @@ CLASH = (function () {
 
 	function viewBuildings() {
 		let userID = window.CLASH.user.id;
-		reqBuildings('building/byUserID/' + userID , 'Building List');
+		reqBuildings('building/byUserID/' + userID, 'Building List');
+	}
+
+	function viewTroops() {
+		let userID = window.CLASH.user.id;
+		reqBuildings('troop/byUserID/' + userID, 'Troop List');
+	}
+	
+	function viewOverview() {
+		clearPage();
+		let userID = window.CLASH.user.id;
+
+		$.ajax('/overview/byUserID/' + userID) 
+		.done((res) => {
+			let mainArea = document.querySelector('#mainArea');
+			let overview = document.querySelector('#overview');
+			let clonedOverview = overview.cloneNode(true);
+
+			clonedOverview
+			.querySelector('#numBuilding').innerHTML = res[0].numBuildings;
+
+			clonedOverview
+			.querySelector('#numTroop').innerHTML = res[0].numTroops;
+
+			clonedOverview
+			.querySelector('#playerLvl').innerHTML = res[0].userLevel;
+
+			mainArea.appendChild(clonedOverview);
+		})
 	}
 
 	let userID
@@ -72,6 +102,7 @@ CLASH = (function () {
 	document.querySelector('#loginBtn').onclick = login;
 	document.querySelector('#viewOverview').onclick = viewOverview;
 	document.querySelector('#viewBuildings').onclick = viewBuildings;
+	document.querySelector('#viewTroops').onclick = viewTroops;
 
 	document.querySelector('#login').onsubmit = function(e) {
 		e.preventDefault();
@@ -91,7 +122,7 @@ CLASH = (function () {
 		})
 		.done((res) => {
 			window.CLASH.user.id = res[0].userID;
-			console.log(window.CLASH.user);
+			viewOverview();
 		})
 		.fail(() => {
 			console.log('done borked');

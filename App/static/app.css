@@ -28,4 +28,14 @@ body {
 footer {
   grid-row-start: footer-start;
 }
+table thead tr th {
+	table-layout: auto;
+	width:100px;
+	border: 1px solid black;
+}
 
+table thead tr td {
+	table-layout: auto;
+	width:100px;
+	border:1px solid black;
+}
