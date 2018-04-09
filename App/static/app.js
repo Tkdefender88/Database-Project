@@ -70,6 +70,7 @@ CLASH = (function () {
 		.done((res) => {
 			let mainArea = document.querySelector('#mainArea');
 			let troops = document.querySelector('#troopList');
+			console.log(troops);
 			let clonedTroops = troops.cloneNode(true);
 			let tableBody = clonedTroops.querySelector('tbody');
 
@@ -105,6 +106,11 @@ CLASH = (function () {
 	function viewBuildings() {
 		let userID = window.CLASH.user.id;
 		reqBuildings('building/byUserID/' + userID, 'Building List');
+
+		document.querySelector('#addBuilding').onsubmit = function(e) {
+			e.preventDefault();
+			let form = document.querySelector('#buildName');
+		}
 	}
 
 	function viewTroops() {
@@ -136,7 +142,6 @@ CLASH = (function () {
 		})
 	}
 
-	let userID
 	//bind the buttons
 	document.querySelector('#loginBtn').onclick = login;
 	document.querySelector('#viewOverview').onclick = viewOverview;
@@ -169,12 +174,8 @@ CLASH = (function () {
 
 		return false;
 	}
-/*
-	document.querySelector('#addBuilding').onsubmit = function(e) {
-		e.preventDefault();
-		let form = document.querySelector('#buildName');
-	}
-*/
+
+	
 	//return the user I guess... 
 	return {
 		user: {

@@ -39,7 +39,7 @@ module.exports = {
 	troops: {
 		get all() {
 			return 'SELECT troopName, levelNum, hp, dps, damageType, '
-			+ 'trainTime, regenTime, upgradeCost, upgradeTime '
+			+ 'trainingTime, regenTime, upgradeCost, upgradeTime '
 			+ 'FROM TroopOverview WHERE userID = \?'
 		},
 

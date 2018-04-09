@@ -29,7 +29,6 @@ function handleQuery(req, res, query, args = []) {
 			serverError(res)
 			return;
 		}
-		console.log(results);
 		res.status(200).json(results);
 	});
 
