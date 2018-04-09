@@ -30,11 +30,11 @@ CLASH = (function () {
 
 		$.ajax(endpoint)
 		.done((res) => {
+			console.log(res);
 			let mainArea = document.querySelector('#mainArea');
 			let buildings = document.querySelector('#buildingList');
 			let clonedBuildings = buildings.cloneNode(true);
 			let tableBody = clonedBuildings.querySelector('tbody');
-			console.log(tableBody);
 
 			for (let building of res) {
 				//make tr
