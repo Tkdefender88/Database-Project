@@ -25,14 +25,23 @@ module.exports = {
 				+ ' typeID = \? AND levelNum = \?'
 		},
 
+		get levelOne() {
+			return 'SELECT buildingID FROM Building WHERE'
+				+ ' typeID = \? AND levelNum = 1'
+		},
+
 		get remove() {
 			return 'DELETE FROM BuildingList WHERE buildingID= \?'
 				+ ' AND userID = \? LIMIT 1'
 		},
 
 		get insert() {
-			return 'INSERT INTO buildingList (buildingID, userID'
-				+ ' VALUES (\?, \?)'
+			return 'INSERT INTO BuildingList (buildingID, userID) '
+				+  'VALUES (\?, \?)'
+		},
+
+		get name() {
+			return 'SELECT typeID FROM BuildingType WHERE buildingName = \?';
 		}
 	},
 

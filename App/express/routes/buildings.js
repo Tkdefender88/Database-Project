@@ -44,4 +44,33 @@ router.route('/building/byUserID/:id')
 })
 .all(badRequest);
 
+//This route will return a type ID for a given building name
+router.route('/building/byBuildingName/:name')
+//Define get requests for the route
+.get((req, res) => {
+	let params = req.params;
+	handleQuery(req, res, queries.buildings.name, [params.name]);
+})
+.all(badRequest);
+
+//This will get a building ID from a typeID and level 1;
+router.route('/building/byBuildingType/:id')
+.get((req, res) => {
+	let params = req.params;
+	handleQuery(req, res, queries.buildings.levelOne, [params.id]);
+})
+
+//This will add a building to the buildingList based on a buildingID
+router.route('/building/addBuilding/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery(
+		req,
+		res,
+		queries.buildings.insert,
+		[body.buildingID, body.userID]
+	);
+})
+.all(badRequest);
+
 module.exports = router;

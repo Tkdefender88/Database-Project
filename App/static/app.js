@@ -19,9 +19,12 @@ CLASH = (function () {
 		}
 	}
 	
-	//Login a temporary dummy user
+	//Show the login prompt
 	function login() {
-		window.CLASH.user.id = 1;
+		let loginForm = document.querySelector('#login');
+		loginForm.classList.remove('h-login');
+		let loginbtn = document.querySelector('#loginBtn');
+		loginbtn.classList.add('h-login');
 	}
 
 	function reqBuildings(endpoint, title) {
@@ -55,11 +58,52 @@ CLASH = (function () {
 			}
 
 			clonedBuildings.querySelector('h2').innerHTML = title;
+			
+			clonedBuildings.querySelector('#addBuilding').onsubmit = (e) => {
+				e.preventDefault();
+				let form = clonedBuildings.querySelector('#addBuilding');
+				let name = form.querySelector('#buildName').value;
+				addBuilding(name);
+			}
 
 			mainArea.appendChild(clonedBuildings);
 		})
 		.fail(() => {
-			console.log('bad boi things happened');
+			console.log('Building list could not be retrieved');
+		})
+	}
+
+	function addBuilding(buildingName) {
+		let typeID;
+		let buildingID;
+		$.ajax('/building/byBuildingName/' + buildingName)
+		.done((res) => {
+			typeID = res[0].typeID;
+			$.ajax('/building/byBuildingType/' + typeID)
+			.done((res) => {
+				buildingID = res[0].buildingID;
+				let payload = {
+					buildingID: buildingID,
+					userID: window.CLASH.user.id
+				}
+				$.ajax('/building/addBuilding/', {
+					method: 'POST',
+					data: JSON.stringify(payload),
+					contentType: 'application/json'
+				})
+				.done((res) => {
+					viewBuildings();
+				})
+				.fail(() => {
+					console.log('Could not add building to list');
+				})
+			})
+			.fail(() => {
+				console.log('Could not get buildingID');
+			})
+		})
+		.fail(() => {
+			console.log('Could not get typeID');
 		})
 	}
 
@@ -70,7 +114,6 @@ CLASH = (function () {
 		.done((res) => {
 			let mainArea = document.querySelector('#mainArea');
 			let troops = document.querySelector('#troopList');
-			console.log(troops);
 			let clonedTroops = troops.cloneNode(true);
 			let tableBody = clonedTroops.querySelector('tbody');
 
@@ -96,26 +139,26 @@ CLASH = (function () {
 
 			clonedTroops.querySelector('h2').innerHTML = title;
 
+			clonedTroops.querySelector('#addTroop').onsubmit = function(e) {
+				e.preventDefault();
+				console.log('Button pressed');
+				let form = document.querySelector('#troopName');
+			}
+
 			mainArea.appendChild(clonedTroops);
 		})
 		.fail(() => {
-			console.log('foobar');
+			console.log('Could not display Troop page');
 		})
 	}
 
 	function viewBuildings() {
 		let userID = window.CLASH.user.id;
 		reqBuildings('building/byUserID/' + userID, 'Building List');
-
-		document.querySelector('#addBuilding').onsubmit = function(e) {
-			e.preventDefault();
-			let form = document.querySelector('#buildName');
-		}
 	}
 
 	function viewTroops() {
 		let userID = window.CLASH.user.id;
-		console.log(userID);
 		reqTroop('troop/byUserID/' + userID, 'Troop List');
 	}
 	
@@ -167,6 +210,8 @@ CLASH = (function () {
 		.done((res) => {
 			window.CLASH.user.id = res[0].userID;
 			viewOverview();
+			form.classList.add('h-login');
+			document.querySelector('#loginBtn').classList.remove('h-login');
 		})
 		.fail(() => {
 			console.log('done borked');

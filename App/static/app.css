@@ -28,14 +28,19 @@ body {
 footer {
   grid-row-start: footer-start;
 }
+
+.h-login{
+	display: none;
+}
+
 table thead tr th {
 	table-layout: auto;
-	width:100px;
+	width:150px;
 	border: 1px solid black;
 }
 
 table thead tr td {
 	table-layout: auto;
-	width:100px;
+	width:150px;
 	border:1px solid black;
 }
