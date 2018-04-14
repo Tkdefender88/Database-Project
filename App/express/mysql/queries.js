@@ -41,7 +41,7 @@ module.exports = {
 		},
 
 		get name() {
-			return 'SELECT typeID FROM BuildingType WHERE buildingName = \?';
+			return 'SELECT typeID FROM BuildingType WHERE buildingName = \?'
 		}
 	},
 
@@ -55,6 +55,10 @@ module.exports = {
 		get nextLevel() {
 			return 'SELECT troopID FROM Troop WHERE typeID =\? AND levelNum =\?'
 		},
+		
+		get levelOne() {
+			return 'SELECT troopID FROM Troop WHERE typeID =\? AND levelNum = 1'
+		},
 
 		get remove() {
 			return 'DELETE FROM TroopList WHERE troopID = \? AND userID = \?' 
@@ -63,6 +67,10 @@ module.exports = {
 
 		get insert() {
 			return 'INSERT INTO TroopList (troopID, userID) VALUES (\?, \?)'
+		}, 
+
+		get name() {
+			return 'SELECT typeID FROM TroopType WHERE troopName = \?'
 		}
 	}
 }

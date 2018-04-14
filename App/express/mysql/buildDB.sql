@@ -109,6 +109,7 @@ CREATE TABLE Troop (
 CREATE TABLE TroopList (
 	troopID int(9) NOT NULL,
 	userID int(9) NOT NULL,
+	CONSTRAINT troopList_PK PRIMARY KEY (troopID, userID),
 	CONSTRAINT troop_FK FOREIGN KEY (troopID)
 	REFERENCES Troop(troopID),
 	CONSTRAINT troop_user_FK FOREIGN KEY (userID) 

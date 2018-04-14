@@ -40,9 +40,26 @@ router.route('/troop/byUserID/:id')
 //Define get requests for the route
 .get((req, res) => {
 	let params = req.params;
-	console.log(params.id);
 	handleQuery(req, res, queries.troops.all, [params.id]);
 })
 .all(badRequest);
+
+router.route('/troop/byTroopName/:name')
+.get((req, res) => {
+	let params = req.params;
+	handleQuery(req, res, queries.troops.name, [params.name]);
+})
+
+router.route('/troop/byTroopType/:id')
+.get((req, res) => {
+	let params = req.params;
+	handleQuery(req, res, queries.troops.levelOne, [params.id])
+})
+
+router.route('/troop/addTroop/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery(req, res, queries.troops.insert, [body.troopID, body.userID])
+})
 
 module.exports = router;

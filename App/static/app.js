@@ -141,14 +141,52 @@ CLASH = (function () {
 
 			clonedTroops.querySelector('#addTroop').onsubmit = function(e) {
 				e.preventDefault();
-				console.log('Button pressed');
-				let form = document.querySelector('#troopName');
+				let form = clonedTroops.querySelector('#addTroop');
+				let name = form.querySelector('#troopName').value;
+				console.log(name);
+				addTroop(name);
 			}
 
 			mainArea.appendChild(clonedTroops);
 		})
 		.fail(() => {
 			console.log('Could not display Troop page');
+		})
+	}
+
+	function addTroop(troopName) {
+		let typeID;
+		let troopID;
+		$.ajax('/troop/byTroopName/' + troopName) 
+		.done((res) => {
+			typeID = res[0].typeID;
+			$.ajax('/troop/byTroopType/' + typeID)
+			.done((res) => {
+				troopID = res[0].troopID;
+
+				let payload = {
+					troopID: troopID,
+					userID: window.CLASH.user.id
+				};
+
+				$.ajax('/troop/addTroop', {
+					method: 'POST',
+					data: JSON.stringify(payload),
+					contentType: 'application/json'
+				})
+				.done((res) => {
+					viewTroops();
+				})
+				.fail(() => {
+					console.log('Failed to add troop');
+				})
+			})
+			.fail(() => {
+				console.log('Could not get troop ID');
+			})
+		})
+		.fail(() => {
+			console.log('Could not get troop ID');
 		})
 	}
 
