@@ -68,7 +68,7 @@ router.route('/building/addBuilding/')
 		req,
 		res,
 		queries.buildings.insert,
-		[body.buildingID, body.userID]
+		[body.userID, body.buildingID]
 	);
 })
 .all(badRequest);
@@ -91,17 +91,6 @@ router.route('/building/remove/')
 		req,
 		res,
 		queries.buildings.remove,
-		[body.userID, body.buildingID]
-	);
-})
-
-router.route('/building/add/')
-.post((req, res) => {
-	let body = req.body;
-	handleQuery(
-		req,
-		res,
-		queries.buildings.insert,
 		[body.userID, body.buildingID]
 	);
 })

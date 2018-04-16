@@ -111,7 +111,7 @@ CLASH = (function () {
 			.done((res) => {
 				levelID = res[0].buildingID;
 				//insert new level building
-				$.ajax('/building/add/', {
+				$.ajax('/building/addBuilding/', {
 					method: 'POST',
 					data: JSON.stringify({
 						userID: userID,
@@ -129,6 +129,9 @@ CLASH = (function () {
 						}),
 						contentType: 'application/json'
 					}) 
+					.done((res) => {
+						viewBuildings();
+					})
 					.fail(() => {
 						console.log('Could not remove the building');			
 					})
@@ -144,8 +147,7 @@ CLASH = (function () {
 		.fail(() => {
 			console.log('Could not get next level ID');
 		})
-	viewBuildings();
-}
+	}
 
 	function addBuilding(buildingName) {
 		let typeID;
