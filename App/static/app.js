@@ -21,9 +21,13 @@ CLASH = (function () {
 	
 	//Show the login prompt
 	function login() {
+		clearPage();
+		window.CLASH.user.id = 0;
 		let loginForm = document.querySelector('#login');
+		let loginbtn = loginForm.querySelector('#loginBtn');
+		let password = loginForm.querySelector('#passwd');
+		password.innerHTML = '';
 		loginForm.classList.remove('h-login');
-		let loginbtn = document.querySelector('#loginBtn');
 		loginbtn.classList.add('h-login');
 	}
 
@@ -51,6 +55,7 @@ CLASH = (function () {
 				let button = document.createElement('button');
 				let text = document.createTextNode('Upgrade');
 				button.appendChild(text);
+				button.onclick = upgradeBuilding;
 				
 				row.appendChild(button);
 
@@ -72,6 +77,75 @@ CLASH = (function () {
 			console.log('Building list could not be retrieved');
 		})
 	}
+
+	function upgradeBuilding() {
+		let userID = window.CLASH.user.id;
+		let row = this.parentElement.children;
+		let name = row[1].innerHTML;
+		let level = parseInt(row[2].innerHTML);
+		let nextLevel = level + 1;
+		let nextLevelID;
+		let levelID;
+
+		//Get the ID for the next building level 
+		$.ajax('/building/level/', {
+			method: 'POST',
+			data: JSON.stringify({
+				buildName: name, 
+				buildLevel: nextLevel
+			}),
+			contentType: 'application/json'
+		})
+		.done((res) => {
+			nextLevelID = res[0].buildingID;
+				
+			//Get building ID for the current level
+			$.ajax('/building/level/', {
+				method: 'POST',
+				data: JSON.stringify({
+					buildName: name,
+					buildLevel: level
+				}),
+				contentType: 'application/json'
+			})
+			.done((res) => {
+				levelID = res[0].buildingID;
+				//insert new level building
+				$.ajax('/building/add/', {
+					method: 'POST',
+					data: JSON.stringify({
+						userID: userID,
+						buildingID: nextLevelID
+					}),
+					contentType: 'application/json'
+				})
+				.done((res) => {
+					//Delete the old level
+					$.ajax('/building/remove/', {
+						method: 'POST',
+						data: JSON.stringify({
+							userID: userID,
+							buildingID: levelID
+						}),
+						contentType: 'application/json'
+					}) 
+					.fail(() => {
+						console.log('Could not remove the building');			
+					})
+				})
+				.fail(() => {
+					console.log('Could not add building');
+				})
+		})
+			.fail(() => {
+				console.log('failed to get current level');
+			})
+		}) 
+		.fail(() => {
+			console.log('Could not get next level ID');
+		})
+	viewBuildings();
+}
 
 	function addBuilding(buildingName) {
 		let typeID;

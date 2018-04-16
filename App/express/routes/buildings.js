@@ -73,4 +73,37 @@ router.route('/building/addBuilding/')
 })
 .all(badRequest);
 
+router.route('/building/level/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery(
+		req,
+		res,
+		queries.buildings.level,
+		[body.buildName, body.buildLevel]
+	);
+})
+
+router.route('/building/remove/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery(
+		req,
+		res,
+		queries.buildings.remove,
+		[body.userID, body.buildingID]
+	);
+})
+
+router.route('/building/add/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery(
+		req,
+		res,
+		queries.buildings.insert,
+		[body.userID, body.buildingID]
+	);
+})
+
 module.exports = router;

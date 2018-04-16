@@ -18,11 +18,12 @@ module.exports = {
 		get all() {
 			return 'SELECT qty, buildingName, levelNum, hp, dps, damageType, '
 			+ 'upgradeCost, upgradeTime FROM BuildingOverview WHERE userID = \?'
+			+ ' ORDER BY buildingName ASC, levelNum DESC'
 		},
 
-		get nextLevel() {
-			return 'SELECT buildingID FROM Building WHERE' 
-				+ ' typeID = \? AND levelNum = \?'
+		get level() {
+			return 'SELECT buildingID FROM Building JOIN BuildingType '
+				+ 'USING (typeID) WHERE buildingName = \? AND levelNum = \?'
 		},
 
 		get levelOne() {
@@ -31,12 +32,12 @@ module.exports = {
 		},
 
 		get remove() {
-			return 'DELETE FROM BuildingList WHERE buildingID= \?'
-				+ ' AND userID = \? LIMIT 1'
+			return 'DELETE FROM BuildingList WHERE userID = \?'
+				+ ' AND buildingID = \? LIMIT 1'
 		},
 
 		get insert() {
-			return 'INSERT INTO BuildingList (buildingID, userID) '
+			return 'INSERT INTO BuildingList (userID, buildingID) '
 				+  'VALUES (\?, \?)'
 		},
 
