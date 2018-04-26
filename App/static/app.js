@@ -10,6 +10,8 @@ if (!('registerElement' in document) ||
 
 
 CLASH = (function () {
+
+	//Clear the entire page so that we can reload it with updated information
 	function clearPage() {
 		//Clear the page
 		let mainArea = document.querySelector('#mainArea');
@@ -31,6 +33,7 @@ CLASH = (function () {
 		loginbtn.classList.add('h-login');
 	}
 
+	//Reqest the building data from the database and place it on the dom
 	function reqBuildings(endpoint, title) {
 		clearPage();
 
@@ -78,6 +81,10 @@ CLASH = (function () {
 		})
 	}
 
+	//This function is bound to the upgrade buttons on the builing list
+	//It goes through to the database based on the building name and level of
+	//the building in it's row and finds the id of the next level of that
+	//building and updates the user's buildinglist with it.
 	function upgradeBuilding() {
 		let userID = window.CLASH.user.id;
 		let row = this.parentElement.children;
@@ -149,6 +156,7 @@ CLASH = (function () {
 		})
 	}
 
+	//Add a new building based on an inputted name, of level one to the list
 	function addBuilding(buildingName) {
 		let typeID;
 		let buildingID;
@@ -230,6 +238,11 @@ CLASH = (function () {
 		})
 	}
 
+	function upgradeTroop() {
+		let row = this.parentElement
+
+	}
+
 	function addTroop(troopName) {
 		let typeID;
 		let troopID;
@@ -287,15 +300,18 @@ CLASH = (function () {
 			let clonedOverview = overview.cloneNode(true);
 
 			clonedOverview
-			.querySelector('#numBuilding').innerHTML = res[0].numBuildings;
+			.querySelector('#numBuilding').innerHTML = res[0].numBuilding;
 
 			clonedOverview
-			.querySelector('#numTroop').innerHTML = res[0].numTroops;
+			.querySelector('#numTroop').innerHTML = res[0].numTroop;
 
 			clonedOverview
 			.querySelector('#playerLvl').innerHTML = res[0].userLevel;
 
 			mainArea.appendChild(clonedOverview);
+		})
+		.fail(() => {
+			console.log("Could not get overview")
 		})
 	}
 

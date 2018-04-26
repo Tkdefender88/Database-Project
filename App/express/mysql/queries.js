@@ -9,7 +9,7 @@ module.exports = {
 
 	overview: {
 		get all() {
-			return 'SELECT numBuildings, numTroops, userLevel '
+			return 'SELECT numBuilding, numTroop, userLevel'
 				+ 'FROM Overview WHERE userID = \?';
 		}
 	},

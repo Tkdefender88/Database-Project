@@ -1,7 +1,7 @@
 #Author Justin Bak
 #Drop all the tables
 DROP TABLE IF EXISTS UserClan, UserWar, BuildingList, Building;
-DROP TABLE IF EXISTS BuildingType, TroopList, Troop, TroopType, Clan;
+DROP TABLE IF EXISTS BuildingType, TroopList, TroopLevel, TroopType, Clan;
 DROP TABLE IF EXISTS War, User;
 
 DROP VIEW IF EXISTS Overview, BuildingOverview, TroopOverview;
@@ -91,8 +91,8 @@ CREATE TABLE TroopType (
 	PRIMARY KEY (typeID)
 );
 
-CREATE TABLE Troop (
-	troopID int(9) NOT NULL AUTO_INCREMENT,
+CREATE TABLE TroopLevel(
+	troopLevelID int(9) NOT NULL AUTO_INCREMENT,
 	typeID int(9) NOT NULL,
 	levelNum int,
 	dps int,
@@ -101,27 +101,31 @@ CREATE TABLE Troop (
 	hp int,
 	upgradeTime time,
 	upgradeCost int,
-	PRIMARY KEY (troopID),
+	PRIMARY KEY (troopLevelID),
 	CONSTRAINT troopType_FK FOREIGN KEY (typeID)
 	REFERENCES TroopType(typeID)
 );
 
 CREATE TABLE TroopList (
-	troopID int(9) NOT NULL,
+	troopLevelID int(9) NOT NULL,
 	userID int(9) NOT NULL,
-	CONSTRAINT troopList_PK PRIMARY KEY (troopID, userID),
-	CONSTRAINT troop_FK FOREIGN KEY (troopID)
-	REFERENCES Troop(troopID),
+	typeID int(9) NOT NULL,
+	CONSTRAINT troopList_PK PRIMARY KEY (typeID, userID),
+	CONSTRAINT level_FK FOREIGN KEY (troopLevelID)
+	REFERENCES TroopLevel(troopLevelID),
+	CONSTRAINT type_FK FOREIGN KEY (typeID)
+	REFERENCES TroopType(typeID),
 	CONSTRAINT troop_user_FK FOREIGN KEY (userID) 
 	REFERENCES User(userID)
 );
 
 CREATE VIEW Overview AS
-	SELECT userID, COUNT(buildingID) AS numBuildings,
-	COUNT(troopID) AS numTroops, userLevel
-	FROM BuildingList JOIN User USING (userID)
-	JOIN TroopList USING (userID)
-	GROUP BY userID, userLevel;
+	SELECT o.userID,
+	(SELECT COUNT(TypeID) FROM TroopList WHERE userID = o.userID) AS numTroop,
+	(SELECT COUNT(buildingID)
+		FROM BuildingList WHERE userID = o.userID) AS numBuilding,
+	(SELECT userLevel FROM User WHERE userID = o.userID) AS userLevel
+	FROM (SELECT userID FROM User) o;
 
 CREATE VIEW BuildingOverview AS
 	SELECT userID, COUNT(buildingID) AS 'qty', buildingName, levelNum, hp, dps,
@@ -134,6 +138,6 @@ CREATE VIEW BuildingOverview AS
 CREATE VIEW TroopOverview AS
 	SELECT userID, troopName, levelNum, hp,
 	trainingTime, regenTime, upgradeCost, upgradeTime, dps, damageType
-	FROM TroopList JOIN Troop USING (troopID)
-	JOIN TroopType USING (typeID);
+	FROM TroopList JOIN TroopLevel USING (troopLevelID)
+	JOIN TroopType ON TroopList.typeID = TroopType.typeID;
 	
