@@ -215,6 +215,7 @@ CLASH = (function () {
 				let upgradeBtn = document.createElement('button');
 				let text = document.createTextNode('Upgrade');
 				upgradeBtn.appendChild(text);
+				upgradeBtn.onclick = upgradeTroop;
 
 				row.appendChild(upgradeBtn);
 
@@ -239,8 +240,58 @@ CLASH = (function () {
 	}
 
 	function upgradeTroop() {
-		let row = this.parentElement
+		let userID = window.CLASH.user.id;
+		let row = this.parentElement.children
+		let name = row[0].innerHTML;
+		let nextLevel = parseInt(row[1].innerHTML) + 1;
+		let nextLevelID;
+		let typeID;
 
+		//get the type ID for the current troop 
+		$.ajax('/troop/byTroopName/' + name)
+		.done((res) => {
+			console.log(res);
+			typeID = res[0].typeID;
+			//get the troopID for the next level
+			$.ajax('/troop/level/', {
+				method: 'POST',
+				data: JSON.stringify({
+					troopName: name,
+					troopLevel: nextLevel
+				}),
+				contentType: 'application/json'
+			})
+			.done((res) => {
+				if (res.length == 0) {
+					console.log('Cannot upgrade troop');
+					return;
+				}
+				nextLevelID = res[0].troopLevelID;
+
+				$.ajax('/troop/upgrade/', {
+					method: 'POST',
+					data: JSON.stringify({
+						userID: userID,
+						troopLevel: nextLevelID,
+						typeID: typeID
+					}),
+					contentType: 'application/json'
+				})
+				.done((res) => {
+					viewTroops();
+				})
+				.fail(() => {
+					console.log('Failed to update troop list table');
+				})
+			})
+			.fail(() => {
+				console.log('Failed to find next level ID');
+			})
+
+		})
+		.fail(()=> {
+			console.log('Could not get the typeID');
+		})
 	}
 
 	function addTroop(troopName) {

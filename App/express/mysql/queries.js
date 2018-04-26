@@ -9,7 +9,7 @@ module.exports = {
 
 	overview: {
 		get all() {
-			return 'SELECT numBuilding, numTroop, userLevel'
+			return 'SELECT numBuilding, numTroop, userLevel '
 				+ 'FROM Overview WHERE userID = \?';
 		}
 	},
@@ -53,8 +53,9 @@ module.exports = {
 			+ 'FROM TroopOverview WHERE userID = \?'
 		},
 
-		get nextLevel() {
-			return 'SELECT troopID FROM Troop WHERE typeID =\? AND levelNum =\?'
+		get level() {
+			return 'Select troopLevelID from TroopLevel JOIN TroopType using'
+				+ ' (typeID) where troopName = \? and levelNum = \?;'
 		},
 		
 		get levelOne() {
@@ -72,6 +73,11 @@ module.exports = {
 
 		get name() {
 			return 'SELECT typeID FROM TroopType WHERE troopName = \?'
+		},
+
+		get upgrade() {
+			return 'UPDATE TroopList SET troopLevelID = \? WHERE userID = \?'
+				+ ' AND typeID = \?';
 		}
 	}
 }

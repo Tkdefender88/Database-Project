@@ -35,7 +35,7 @@ function handleQuery(req, res, query, args = []) {
 	con.end();
 }
 
-//Define the building Overview route
+//Define the troop Overview route
 router.route('/troop/byUserID/:id') 
 //Define get requests for the route
 .get((req, res) => {
@@ -49,17 +49,44 @@ router.route('/troop/byTroopName/:name')
 	let params = req.params;
 	handleQuery(req, res, queries.troops.name, [params.name]);
 })
+.all(badRequest);
 
 router.route('/troop/byTroopType/:id')
 .get((req, res) => {
 	let params = req.params;
 	handleQuery(req, res, queries.troops.levelOne, [params.id])
 })
+.all(badRequest);
 
 router.route('/troop/addTroop/')
 .post((req, res) => {
 	let body = req.body;
 	handleQuery(req, res, queries.troops.insert, [body.troopID, body.userID])
 })
+.all(badRequest);
+
+router.route('/troop/level/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery(
+		req,
+		res,
+		queries.troops.level,
+		[body.troopName, body.troopLevel]
+	)
+})
+.all(badRequest);
+
+router.route('/troop/upgrade/')
+.post((req, res) => {
+	let body = req.body;
+	handleQuery (
+		req,
+		res,
+		queries.troops.upgrade,
+		[body.troopLevel, body.userID, body.typeID]
+	)
+}) 
+.all(badRequest);
 
 module.exports = router;

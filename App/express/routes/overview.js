@@ -17,25 +17,19 @@ function serverError(res) {
 function handleQuery(req, res, query, args = []) {
 	let con = mysql.createConnection(credentials);
 
-	console.log('1');
 	con.connect((err) => {
 		if (err) {
-			console.log('2');
 			serverError(res);
 			return;
 		}
 	})
 
-	console.log('3');
 	con.query(query, args, (err, results, fields) => {
 		if (err) {
-			console.log(4);
 			serverError(res)
 			return;
 		}
-		console.log(5);
 		res.status(200).json(results);
-		console.log(results);
 	});
 
 	con.end();
