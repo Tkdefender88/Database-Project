@@ -41,33 +41,54 @@ INSERT INTO TroopType (troopName, damageType)
 VALUES ('dragon', 'areaSplash');
 
 #TroopLevels
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (1, 1, 7, '00:00:24', 20, '00:00:00', 0);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (1, 1, 7, '00:00:24', NULL , 20, '00:00:00', 0);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime,  hp, upgradeTime,
 upgradeCost)
-VALUES (1, 2, 9, '00:00:12', 23, '12:00:00', 50000);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (1, 2, 9, '00:00:12', NULL , 23, '12:00:00', 50000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime,regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (1, 3, 12, '00:00:08', 28, '48:00:00', 250000);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (1, 3, 12, '00:00:08', NULL , 28, '48:00:00', 250000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (2, 1, 8, '00:00:20', 45, '06:00:00', 50000);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (2, 1, 8, '00:00:20', NULL , 45, '06:00:00', 50000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (2, 2, 11, '00:00:15', 54, '24:00:00', 150000); 
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (2, 2, 11, '00:00:15', NULL , 54, '24:00:00', 150000); 
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (2, 3, 14, '00:00:10', 65, '72:00:00', 5000000);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (2, 3, 14, '00:00:10', NULL , 65, '72:00:00', 5000000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (3, 1, 8, '00:15:00', 20, '01:00:00', 60);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (3, 1, 11, '00:00:02', NULL , 300, '00:00:00', 0);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (4, 7, 8, '00:30:00', 25, '05:30:00', 60);
-INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, hp, upgradeTime,
+VALUES (3, 2, 14, '00:00:02', NULL , 360, '24:00:00', 100000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
 upgradeCost)
-VALUES (2, 5, 17, '00:00:55', 20, '02:00:00', 60);
+VALUES (3, 3, 19, '00:00:01', NULL , 430, '48:00:00', 250000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
+upgradeCost)
+VALUES (3, 4, 24, '00:00:01',  NULL , 520, '36:00:00', 750000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
+upgradeCost)
+VALUES (4, 1, 25, '00:00:02', NULL , 150, '00:00:00', 0);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
+upgradeCost)
+VALUES (4, 2, 32, '00:00:02', NULL , 180, '24:00:00', 150000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
+upgradeCost)
+VALUES (4, 3, 48, '00:00:01',  NULL ,  216, '48:00:00', 450000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp,
+upgradeTime, upgradeCost)
+VALUES (5, 1, 120, '00:00:00', '00:00:10', 1700, '00:00:00', 10000);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp, upgradeTime,
+upgradeCost)
+VALUES (5, 2, 122, '00:00:00','00:00:11', 1742, '00:00:00', 12500);
+INSERT INTO TroopLevel (typeID, levelNum, dps, trainingTime, regenTime, hp,
+upgradeTime, upgradeCost)
+VALUES (5, 3, 124, '00:00:00','00:00:12', 1786, '00:00:00', 15000);
 
 #Buildings
 INSERT INTO BuildingType (buildingName)
@@ -96,8 +117,8 @@ INSERT INTO TroopList (userID, troopLevelID, typeID)
 VALUES (1, 1, 1);
 INSERT INTO TroopList (userID, troopLevelID, typeID)
 VALUES (1, 4, 2);
-INSERT INTO TroopList (userID, troopLevelID, typeID)
-VALUES (1, 7, 3);
+#INSERT INTO TroopList (userID, troopLevelID, typeID)
+#VALUES (1, 7, 3);
 INSERT INTO TroopList (userID, troopLevelID, typeID)
 VALUES (2, 1, 1);
 INSERT INTO TroopList (userID, troopLevelID, typeID)

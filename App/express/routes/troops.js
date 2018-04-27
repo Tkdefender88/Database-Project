@@ -61,7 +61,7 @@ router.route('/troop/byTroopType/:id')
 router.route('/troop/addTroop/')
 .post((req, res) => {
 	let body = req.body;
-	handleQuery(req, res, queries.troops.insert, [body.troopID, body.userID])
+	handleQuery(req, res, queries.troops.insert, [body.troopID, body.userID, body.typeID])
 })
 .all(badRequest);
 

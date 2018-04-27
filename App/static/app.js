@@ -302,16 +302,14 @@ CLASH = (function () {
 			typeID = res[0].typeID;
 			$.ajax('/troop/byTroopType/' + typeID)
 			.done((res) => {
-				troopID = res[0].troopID;
-
-				let payload = {
-					troopID: troopID,
-					userID: window.CLASH.user.id
-				};
-
+				troopID = res[0].troopLevelID;
 				$.ajax('/troop/addTroop', {
 					method: 'POST',
-					data: JSON.stringify(payload),
+					data: JSON.stringify({
+						troopID: troopID,
+						userID: window.CLASH.user.id,
+						typeID: typeID
+					}),
 					contentType: 'application/json'
 				})
 				.done((res) => {

@@ -59,7 +59,7 @@ module.exports = {
 		},
 		
 		get levelOne() {
-			return 'SELECT troopID FROM Troop WHERE typeID =\? AND levelNum = 1'
+			return 'SELECT troopLevelID FROM TroopLevel WHERE typeID =\? AND levelNum = 1'
 		},
 
 		get remove() {
@@ -68,7 +68,8 @@ module.exports = {
 		},
 
 		get insert() {
-			return 'INSERT INTO TroopList (troopID, userID) VALUES (\?, \?)'
+			return 'INSERT INTO TroopList (troopLevelID, userID, typeID) '
+				+ ' VALUES (\?, \?, \?)'
 		}, 
 
 		get name() {
